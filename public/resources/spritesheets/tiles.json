@@ -1,0 +1,98 @@
+[
+  {
+    "name": "overground",
+    "tileHeight": 16,
+    "tileWidth": 16,
+    "tiles": [
+      {
+        "name": "ground",
+        "position": {"x": 0, "y": 0},
+        "size": {"w": 16, "h": 16}
+      },
+      {
+        "name": "bricks-light",
+        "position": {
+          "x": 16,
+          "y": 0
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "bricks-dark",
+        "position": {
+          "x": 32,
+          "y": 0
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "diamond",
+        "position": {
+          "x": 0,
+          "y": 16
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "sky",
+        "position": {"x": 48, "y": 335},
+        "size": {"w": 16, "h": 16}
+      },
+      {
+        "name": "surprise-1",
+        "position": {
+          "x": 368,
+          "y": 0
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "surprise-2",
+        "position": {
+          "x": 384,
+          "y": 0
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "surprise-3",
+        "position": {
+          "x": 400,
+          "y": 0
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      }
+    ],
+    "animations": [
+      {
+        "name": "surprise",
+        "speed": 140,
+        "frames": [
+          "surprise-1",
+          "surprise-1",
+          "surprise-1",
+          "surprise-2",
+          "surprise-3"
+        ]
+      }
+    ]
+  }
+]

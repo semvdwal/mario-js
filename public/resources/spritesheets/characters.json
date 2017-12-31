@@ -1,0 +1,137 @@
+[
+  {
+    "name": "mario",
+    "tileHeight": 16,
+    "tileWidth": 16,
+    "tiles": [
+      {
+        "name": "stand",
+        "position": {"x": 277, "y": 44},
+        "size": {"w": 12, "h": 16}
+      },
+      {
+        "name": "walk-1",
+        "position": {"x": 290, "y": 44},
+        "size": {"w": 16, "h": 16}
+      },
+      {
+        "name": "walk-2",
+        "position": {"x": 304, "y": 44},
+        "size": {"w": 16, "h": 16}
+      },
+      {
+        "name": "walk-3",
+        "position": {
+          "x": 320,
+          "y": 44
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "jump",
+        "position": {
+          "x": 355,
+          "y": 44
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "stand-reverse",
+        "position": {
+          "x": 277,
+          "y": 44
+        },
+        "size": {
+          "w": 12,
+          "h": 16
+        }
+      },
+      {
+        "name": "walk-1-reverse",
+        "position": {
+          "x": 290,
+          "y": 44
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "walk-2-reverse",
+        "position": {
+          "x": 304,
+          "y": 44
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "walk-3-reverse",
+        "position": {
+          "x": 320,
+          "y": 44
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "jump-reverse",
+        "position": {
+          "x": 355,
+          "y": 44
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      }
+    ],
+    "animations": [
+      {
+        "name": "walk",
+        "speed": 150,
+        "frames": [
+          "walk-1", "walk-2", "walk-3"
+        ]
+      },
+      {
+        "name": "run",
+        "speed": 85,
+        "frames": [
+          "walk-1",
+          "walk-2",
+          "walk-3"
+        ]
+      },
+      {
+        "name": "walk-reverse",
+        "speed": 150,
+        "frames": [
+          "walk-1-reverse",
+          "walk-2-reverse",
+          "walk-3-reverse"
+        ]
+      },
+      {
+        "name": "run-reverse",
+        "speed": 85,
+        "frames": [
+          "walk-1-reverse",
+          "walk-2-reverse",
+          "walk-3-reverse"
+        ]
+      }
+    ]
+  }
+]

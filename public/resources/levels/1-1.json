@@ -1,0 +1,109 @@
+{
+    "tileset": "overground",
+    "layers": {
+        "background": [
+            {
+                "name": "sky",
+                "type": "air",
+                "range": [
+                    0,
+                    0,
+                    20,
+                    15
+                ]
+            },
+            {
+                "name": "ground",
+                "type": "solid",
+                "range": [
+                    0,
+                    13,
+                    10,
+                    15
+                ]
+            },
+            {
+                "name": "ground",
+                "type": "solid",
+                "range": [
+                    12,
+                    13,
+                    20,
+                    15
+                ]
+            },
+            {
+                "name": "bricks-light",
+                "type": "solid",
+                "range": [
+                    6,
+                    10,
+                    7,
+                    11
+                ]
+            },
+            {
+              "name": "surprise",
+              "type": "solid",
+              "range": [
+                7,
+                10,
+                9,
+                11
+              ]
+            },
+            {
+              "name": "bricks-light",
+              "type": "solid",
+              "range": [
+                8,
+                10,
+                9,
+                11
+              ]
+            },
+            {
+              "name": "diamond",
+              "type": "solid",
+              "range": [
+                15,
+                12,
+                19,
+                13
+              ]
+            },
+            {
+              "name": "diamond",
+              "type": "solid",
+              "range": [
+                16,
+                11,
+                19,
+                12
+              ]
+            },
+            {
+              "name": "diamond",
+              "type": "solid",
+              "range": [
+                17,
+                10,
+                19,
+                11
+              ]
+            },
+            {
+              "name": "diamond",
+              "type": "solid",
+              "range": [
+                18,
+                9,
+                19,
+                10
+              ]
+            }
+        ],
+        "foreground": {},
+        "enemies": {}
+    }
+}
