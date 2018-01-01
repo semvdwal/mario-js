@@ -2,6 +2,7 @@ import {Trait} from "./Trait.js";
 import {Controls} from "../helpers/Controls.js";
 import {Sound} from "../helpers/Sound.js";
 import {Sides} from "../entities/Entity.js";
+import {Collider} from "../layers/Collider.js";
 
 export class Jump extends Trait {
 
@@ -9,7 +10,7 @@ export class Jump extends Trait {
         super("Jump");
 
         this.isJumping = false;
-        this.jumpSpeed = 100;
+        this.jumpSpeed = 400;
         this.jumpTime = 0;
         this.maxJumpTime = 250;
 
@@ -35,10 +36,12 @@ export class Jump extends Trait {
             if (this.jumpTime >= this.maxJumpTime) {
                 this.stopJump();
             }
+
+            Collider.instance().checkY(entity);
         }
 
         if (deltaTime > 0 && this.isJumping) {
-            entity.position.y -= (this.jumpSpeed / deltaTime);
+            entity.velocity.y -= (this.jumpSpeed / deltaTime);
         }
     }
 
@@ -57,6 +60,8 @@ export class Jump extends Trait {
             this.resetJump();
         } else if (side === Sides.TOP) {
             this.stopJump();
+            entity.velocity.y = 0;
+            entity.bounds.top = collider.bounds.bottom;
         }
     }
 

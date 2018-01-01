@@ -6,8 +6,8 @@
     "tiles": [
       {
         "name": "stand",
-        "position": {"x": 277, "y": 44},
-        "size": {"w": 12, "h": 16}
+        "position": {"x": 275, "y": 44},
+        "size": {"w": 14, "h": 16}
       },
       {
         "name": "walk-1",
@@ -44,18 +44,18 @@
       {
         "name": "stand-reverse",
         "position": {
-          "x": 277,
+          "x": 222,
           "y": 44
         },
         "size": {
-          "w": 12,
+          "w": 14,
           "h": 16
         }
       },
       {
         "name": "walk-1-reverse",
         "position": {
-          "x": 290,
+          "x": 206,
           "y": 44
         },
         "size": {
@@ -66,7 +66,7 @@
       {
         "name": "walk-2-reverse",
         "position": {
-          "x": 304,
+          "x": 193,
           "y": 44
         },
         "size": {
@@ -77,7 +77,7 @@
       {
         "name": "walk-3-reverse",
         "position": {
-          "x": 320,
+          "x": 177,
           "y": 44
         },
         "size": {
@@ -88,7 +88,7 @@
       {
         "name": "jump-reverse",
         "position": {
-          "x": 355,
+          "x": 142,
           "y": 44
         },
         "size": {

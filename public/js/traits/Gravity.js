@@ -27,6 +27,7 @@ export class Gravity extends Trait {
         if (side === Sides.BOTTOM) {
             entity.velocity.y = 0;
             entity.position.y = collider.position.y - entity.size.x;
+            this.isFalling = false;
         }
     }
 

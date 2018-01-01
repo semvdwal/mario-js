@@ -36,11 +36,23 @@ export class Mario extends Entity {
     render(canvas, deltaTime) {
 
         if (this.jump.isJumping) {
-            canvas.draw(this.sprites.get("jump"), this.position);
+            if(this.walk.heading === -1) {
+                canvas.draw(this.sprites.get("jump-reverse"), this.position);
+            } else {
+                canvas.draw(this.sprites.get("jump"), this.position);
+            }
         } else if (this.velocity.x !== 0) {
-            canvas.draw(this.sprites.anim("walk", deltaTime ), this.position);
+            if(this.walk.heading === -1) {
+                canvas.draw(this.sprites.anim("walk-reverse", deltaTime), this.position);
+            } else {
+                canvas.draw(this.sprites.anim("walk", deltaTime), this.position);
+            }
         } else {
-            canvas.draw(this.sprites.get("stand"), this.position);
+            if(this.walk.heading === -1) {
+                canvas.draw(this.sprites.get("stand-reverse"), this.position);
+            } else {
+                canvas.draw(this.sprites.get("stand"), this.position);
+            }
         }
 
     }

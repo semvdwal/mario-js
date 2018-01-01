@@ -57,6 +57,8 @@ export class Entity {
     }
 
     obstruct(collider, side) {
+        // console.log("Obstruct with " + collider + (collider.hasOwnProperty("type")?"["+collider.type+"] ":"") + " side ", side);
+
         this.traits.forEach(trait => trait.obstruct(this, collider, side));
     }
 
