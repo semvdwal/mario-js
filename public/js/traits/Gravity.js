@@ -18,15 +18,16 @@ export class Gravity extends Trait {
             if (entity.velocity.y > this.terminalVelocity) entity.velocity.y = this.terminalVelocity;
         }
 
-        this.isFalling = true;
-
-        Collider.instance().checkY(entity);
+        this.addTask(() => {
+            this.isFalling = true;
+            Collider.instance().checkY(entity);
+        });
     }
 
     obstruct(entity, collider, side) {
-        if (side === Sides.BOTTOM) {
+        if (side === Sides.BOTTOM && entity.velocity.y > 0) {
             entity.velocity.y = 0;
-            entity.position.y = collider.position.y - entity.size.x;
+            entity.position.y = collider.position.y - entity.size.y;
             this.isFalling = false;
         }
     }

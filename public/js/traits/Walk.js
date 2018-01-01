@@ -18,16 +18,6 @@ export class Walk extends Trait {
         this.direction = 0;
         this.heading = 1;
 
-        this.pressedLeft = 0;
-        this.pressedRight = 0;
-
-        Controls.instance().listenTo(["Left", "Right", "B"], (state, key) => {
-            if (key == "Left") this.pressedLeft = state ? -1 : 0;
-            if (key == "Right") this.pressedRight = state ? 1 : 0;
-            if (key == "B") this.isRunning = state;
-
-            this.direction = this.pressedLeft + this.pressedRight;
-        });
     }
 
     update(entity, deltaTime) {
@@ -57,15 +47,11 @@ export class Walk extends Trait {
 
     obstruct(entity, collider, side) {
         if (side === Sides.RIGHT) {
-            // console.log("WALK Obstruct right");
-
             entity.velocity.x = 0;
-            // entity.position.x = collider.position.x - entity.size.x;
+            entity.position.x = collider.position.x - entity.size.x;
         } else if (side === Sides.LEFT) {
-            // console.log("WALK Obstruct left");
-
             entity.velocity.x = 0;
-            // entity.position.x = collider.position.x + collider.size.x;
+            entity.position.x = collider.position.x + collider.size.x;
         }
     }
 

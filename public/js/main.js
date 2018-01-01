@@ -2,6 +2,7 @@ import {Canvas} from "./helpers/Canvas.js";
 import {Camera} from "./actors/Camera.js";
 import {Level} from "./helpers/Level.js";
 import {Mario} from "./entities/Mario.js";
+import {Player} from "./actors/Player.js";
 
 class Game {
 
@@ -58,7 +59,9 @@ class Game {
         });
 
         Mario.load().then(mario => {
-            this.entities.push(mario)
+            this.entities.push(mario);
+            this.player = new Player();
+            this.player.setEntity(mario);
         });
 
     }

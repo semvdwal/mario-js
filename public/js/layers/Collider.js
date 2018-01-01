@@ -59,7 +59,7 @@ export class Collider extends Layer {
     checkX(entity) {
         if(entity.velocity.x === 0) return;
         this.colliders.filter(collider => {
-            if(collider.bounds.bottom <= entity.bounds.top || collider.bounds.top >= entity.bounds.bottom) return false;
+            if(collider.bounds.bottom < entity.bounds.top || collider.bounds.top > entity.bounds.bottom) return false;
 
             if(entity.velocity.x > 0) {
                 return collider.bounds.right > entity.bounds.right

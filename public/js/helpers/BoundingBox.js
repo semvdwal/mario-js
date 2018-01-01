@@ -12,23 +12,6 @@ export class BoundingBox {
             && this.right > box.left;
     }
 
-    touches(box) {
-        return this.bottom > box.top - 1
-            || this.top < box.bottom + 1
-            || this.left < box.right + 1
-            || this.right > box.left - 1;
-    }
-
-    obstructsX(box) {
-        return this.right >= box.left
-            || this.left <= box.right;
-    }
-
-    obstructsY(box) {
-        return this.bottom >= box.top
-            || this.top <= box.bottom;
-    }
-
     get bottom() {
         return this.pos.y + this.size.y + this.offset.y;
     }

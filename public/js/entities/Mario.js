@@ -13,10 +13,11 @@ export class Mario extends Entity {
         super("Mario");
         this.sprites = sprites;
 
-        this.addTrait(new Move());
         this.addTrait(new Walk());
         this.addTrait(new Gravity());
         this.addTrait(new Jump());
+
+        this.addTrait(new Move());
 
         this.position.x = 10;
         this.position.y = 10;
