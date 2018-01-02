@@ -17,13 +17,12 @@ class Game {
 
         this.actors = [];
         this.entities = [];
-        this.camera = new Camera();
 
         this.updateTime = 0;
         this.fps = 0;
         this.state = this.STATE_INIT;
 
-        this.updateFrequency = 60;
+        this.updateFrequency = 120;
     }
 
     start() {
@@ -37,7 +36,7 @@ class Game {
     }
 
     initCanvas() {
-        this.canvas = new Canvas();
+        this.canvas = new Canvas(Camera.instance());
     }
 
     initLoading() {
@@ -60,8 +59,14 @@ class Game {
 
         Mario.load().then(mario => {
             this.entities.push(mario);
-            this.player = new Player();
-            this.player.setEntity(mario);
+
+            let player = new Player();
+            player.setEntity(mario);
+
+            let camera = Camera.instance();
+            camera.setEntity(mario);
+
+            this.actors.push(player, camera);
         });
 
     }
@@ -78,7 +83,7 @@ class Game {
         this.fps = Math.round(1000 / elapsedTime);
 
         let updateCount = Math.floor(elapsedTime / (1000/60));
-        updateCount = 1;
+        // updateCount = 1;
         let frameTime = (elapsedTime / updateCount);
 
         for (let i = 0; i < updateCount; i++) {

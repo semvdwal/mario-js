@@ -22,7 +22,6 @@ export class Jump extends Trait {
             if (state && this.canJump) {
                 this.isJumping = true;
                 this.sound.effect("jump-small");
-
             } else {
                 this.isJumping = false;
                 this.canJump = false;

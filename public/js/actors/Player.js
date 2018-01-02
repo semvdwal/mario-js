@@ -19,7 +19,7 @@ export class Player extends Actor {
 
             if (this.controlledEntity != null) {
                 this.controlledEntity.walk.direction = this.pressedLeft + this.pressedRight;
-                this.controlledEntity.isRunning = this.isRunning;
+                this.controlledEntity.walk.isRunning = this.isRunning;
             }
         });
     }

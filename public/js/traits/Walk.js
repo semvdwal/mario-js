@@ -13,7 +13,7 @@ export class Walk extends Trait {
         this.deceleration = 2;
 
         this.walkingSpeed = 150;
-        this.runningSpeed = 500;
+        this.runningSpeed = 300;
 
         this.direction = 0;
         this.heading = 1;
@@ -34,7 +34,7 @@ export class Walk extends Trait {
                 }
 
                 entity.velocity.x += this.acceleration * this.direction;
-                if (entity.velocity.x > speed) entity.velocity.x = speed;
+                if (Math.abs(entity.velocity.x) > speed) entity.velocity.x = speed * this.direction;
             } else {
                 const decel = Math.min(Math.abs(entity.velocity.x), this.deceleration * deltaTime);
                 entity.velocity.x += entity.velocity.x > 0 ? -decel : decel;

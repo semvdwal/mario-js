@@ -10,7 +10,7 @@ export class Collider extends Layer {
 
         this.drawBoundingBoxes = {
             colliders: false,
-            entities: true
+            entities: false
         };
 
         this.drawSpecial = [];
@@ -59,7 +59,7 @@ export class Collider extends Layer {
     checkX(entity) {
         if(entity.velocity.x === 0) return;
         this.colliders.filter(collider => {
-            if(collider.bounds.bottom < entity.bounds.top || collider.bounds.top > entity.bounds.bottom) return false;
+            if(collider.bounds.bottom < entity.bounds.top + 1 || collider.bounds.top > entity.bounds.bottom - 1) return false;
 
             if(entity.velocity.x > 0) {
                 return collider.bounds.right > entity.bounds.right
@@ -69,7 +69,7 @@ export class Collider extends Layer {
                     && collider.bounds.left > entity.bounds.left - entity.size.x;
             }
         }).forEach(collider => {
-            this.drawSpecial.push(collider);
+            // this.drawSpecial.push(collider);
             if (entity.bounds.overlaps(collider.bounds)) {
                 if (entity.velocity.x < 0) {
                     entity.obstruct(collider, Sides.LEFT);
@@ -83,7 +83,7 @@ export class Collider extends Layer {
     checkY(entity) {
         if(entity.velocity.y === 0) return;
         this.colliders.filter(collider => {
-            if(collider.bounds.right < entity.bounds.left || collider.bounds.left > entity.bounds.right) return false;
+            if(collider.bounds.right < entity.bounds.left + 1 || collider.bounds.left > entity.bounds.right - 1) return false;
 
             if(entity.velocity.y > 0) {
                 return collider.bounds.top > entity.bounds.top
@@ -93,7 +93,7 @@ export class Collider extends Layer {
                     && collider.bounds.bottom > entity.bounds.bottom - entity.size.y;
             }
         }).forEach(collider => {
-            this.drawSpecial.push(collider);
+            // this.drawSpecial.push(collider);
             if (entity.bounds.overlaps(collider.bounds)) {
                 if (entity.velocity.y < 0) {
                     entity.obstruct(collider, Sides.TOP);
