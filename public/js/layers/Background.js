@@ -19,7 +19,7 @@ export class Background extends Layer {
                 for (let x = tile.range[0]; x < tile.range[2]; x++) {
                     for (let y = tile.range[1]; y < tile.range[3]; y++) {
                         collider.addCollider(
-                            new Block(x * 16, y * 16, 16, 16, tile.name)
+                            new Block(x * 16, y * 16, 16, 16, tile.name, tile.type)
                         );
                     }
                 }

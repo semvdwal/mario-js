@@ -12,6 +12,14 @@ export class BoundingBox {
             && this.right > box.left;
     }
 
+    overlapsX(box) {
+        return this.left < box.right && this.right > box.left;
+    }
+
+    overlapsY(box) {
+        return this.bottom > box.top && this.top < this.bottom;
+    }
+
     get bottom() {
         return this.pos.y + this.size.y + this.offset.y;
     }

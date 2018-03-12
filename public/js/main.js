@@ -33,6 +33,16 @@ class Game {
         ]).then(function() {
             me.state = me.STATE_MENU;
         });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "hidden") {
+                this.state = this.STATE_PAUSED;
+            }
+        });
+
+        document.addEventListener("click", () => {
+            if (this.state === this.STATE_PAUSED) this.state = this.STATE_RUNNIG;
+        });
     }
 
     initCanvas() {
@@ -67,6 +77,8 @@ class Game {
             camera.setEntity(mario);
 
             this.actors.push(player, camera);
+
+            this.state = this.STATE_RUNNIG;
         });
 
     }
@@ -82,20 +94,31 @@ class Game {
 
         this.fps = Math.round(1000 / elapsedTime);
 
-        let updateCount = Math.floor(elapsedTime / (1000/60));
-        // updateCount = 1;
-        let frameTime = (elapsedTime / updateCount);
+        switch(this.state) {
+            case this.STATE_RUNNIG:
+                let updateCount = Math.floor(elapsedTime / (1000 / 60));
+                let frameTime = (elapsedTime / updateCount);
 
-        for (let i = 0; i < updateCount; i++) {
-            this.level.update(frameTime);
-            this.actors.forEach(actor => actor.update(frameTime));
-            this.entities.forEach(entity => entity.update(frameTime));
+                for (let i = 0; i < updateCount; i++) {
+                    this.level.update(frameTime);
+                    this.actors.forEach(actor => actor.update(frameTime));
+                    this.entities.forEach(entity => entity.update(frameTime));
+                }
+
+                this.level.draw(this.camera, totalTime);
+                this.entities.forEach(entity => entity.render(this.canvas, totalTime));
+                break;
+            case this.STATE_PAUSED:
+                this.level.draw(this.camera, 0);
+                this.entities.forEach(entity => entity.render(this.canvas, 0));
+
+                this.canvas.drawOverlay();
+                this.canvas.drawText(110, 100, "GAME PAUSED");
+                break;
         }
 
-        this.level.draw(this.camera, totalTime);
-        this.entities.forEach(entity => entity.render(this.canvas, totalTime));
-
         // Displaying FPS
+        this.canvas.context.fillStyle = "#000";
         this.canvas.context.font = "14px Helvetica";
         this.canvas.context.fillText(this.fps, 300, 15);
 

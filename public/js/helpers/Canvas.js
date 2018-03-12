@@ -5,6 +5,9 @@ export class Canvas {
 
         this.canvas = document.getElementById("game-canvas");
         this.context = this.canvas.getContext("2d");
+
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
     }
 
     draw(image, position) {
@@ -17,6 +20,16 @@ export class Canvas {
         this.context.strokeStyle = color;
         let [cX, cY] = this.camera.translate(x, y);
         this.context.strokeRect(cX, cY, w, h);
+    }
+
+    drawText(x, y, text, color = "#ffffff") {
+        this.context.fillStyle = color;
+        this.context.fillText(text, x, y);
+    }
+
+    drawOverlay(color = "rgba(0,0,0,0.5)") {
+        this.context.fillStyle = color;
+        this.context.fillRect(0, 0, this.width, this.height);
     }
 
 }

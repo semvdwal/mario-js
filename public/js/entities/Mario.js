@@ -13,9 +13,9 @@ export class Mario extends Entity {
         super("Mario");
         this.sprites = sprites;
 
-        this.addTrait(new Walk());
         this.addTrait(new Gravity());
         this.addTrait(new Jump());
+        this.addTrait(new Walk());
 
         this.addTrait(new Move());
 
@@ -36,7 +36,7 @@ export class Mario extends Entity {
 
     render(canvas, deltaTime) {
 
-        if (this.jump.isJumping) {
+        if (this.jump.isJumping || this.gravity.isFalling) {
             if(this.walk.heading === -1) {
                 canvas.draw(this.sprites.get("jump-reverse"), this.position);
             } else {

@@ -13,23 +13,23 @@ export class Gravity extends Trait {
     }
 
     update(entity, deltaTime) {
+
+        this.isFalling = !Collider.instance().checkObstruction(entity, Sides.BOTTOM);
+
         if (this.isFalling) {
             entity.velocity.y += this.gravity;
             if (entity.velocity.y > this.terminalVelocity) entity.velocity.y = this.terminalVelocity;
+        } else if (entity.velocity.y > 0) {
+            entity.velocity.y = 0;
         }
-
-        this.addTask(() => {
-            this.isFalling = true;
-            Collider.instance().checkY(entity);
-        });
     }
 
     obstruct(entity, collider, side) {
-        if (side === Sides.BOTTOM && entity.velocity.y > 0) {
-            entity.velocity.y = 0;
-            entity.position.y = collider.position.y - entity.size.y;
-            this.isFalling = false;
-        }
+        // if (side === Sides.BOTTOM && entity.velocity.y > 0) {
+        //     entity.velocity.y = 0;
+        //     entity.position.y = collider.position.y - entity.size.y;
+        //     this.isFalling = false;
+        // }
     }
 
 }

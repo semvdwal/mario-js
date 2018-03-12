@@ -45,6 +45,36 @@ export class Collider extends Layer {
         });
     }
 
+    checkObstruction(entity, side) {
+        // Return true if the entity is obstructed in the direction of the given side, false otherwise
+        let entityColliders = this.colliders
+        .filter(collider => {
+            if (entity === collider) return false;
+            return entity.bounds.overlaps(collider.bounds);
+        });
+        entityColliders.forEach(collider => {
+            this.drawSpecial.push(collider);
+        });
+        entityColliders = entityColliders
+        .filter(collider => {
+            switch (side) {
+                case Sides.TOP:
+                    return entity.bounds.top > collider.bounds.top;
+                case Sides.RIGHT:
+                    return entity.bounds.right < collider.bounds.right;
+                case Sides.BOTTOM:
+                    return entity.bounds.bottom < collider.bounds.bottom;
+                case Sides.LEFT:
+                    return entity.bounds.left > collider.bounds.left;
+            }
+        });
+        entityColliders.forEach(collider => {
+            collider.obstruct(entity, side);
+            entity.obstruct(collider, side);
+        });
+        return entityColliders.length > 0;
+    }
+
     check(subject) {
         this.entities.forEach(candidate => {
             if (subject === candidate) return;
@@ -62,14 +92,14 @@ export class Collider extends Layer {
             if(collider.bounds.bottom < entity.bounds.top + 1 || collider.bounds.top > entity.bounds.bottom - 1) return false;
 
             if(entity.velocity.x > 0) {
-                return collider.bounds.right > entity.bounds.right
-                    && collider.bounds.right < entity.bounds.right + entity.size.x;
+                return collider.bounds.right >= entity.bounds.right
+                    && collider.bounds.right <= entity.bounds.right + entity.size.x;
             } else {
-                return collider.bounds.left < entity.bounds.left
-                    && collider.bounds.left > entity.bounds.left - entity.size.x;
+                return collider.bounds.left <= entity.bounds.left
+                    && collider.bounds.left >= entity.bounds.left - entity.size.x;
             }
         }).forEach(collider => {
-            // this.drawSpecial.push(collider);
+            this.drawSpecial.push(collider);
             if (entity.bounds.overlaps(collider.bounds)) {
                 if (entity.velocity.x < 0) {
                     entity.obstruct(collider, Sides.LEFT);
