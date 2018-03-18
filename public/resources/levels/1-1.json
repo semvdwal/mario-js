@@ -101,6 +101,106 @@
                 19,
                 10
               ]
+            },
+            {
+              "name": "bricks-light",
+              "type": "solid",
+              "range": [
+                24,
+                8,
+                25,
+                9
+              ]
+            },
+            {
+              "name": "bricks-light",
+              "type": "solid",
+              "range": [
+                28,
+                5,
+                31,
+                6
+              ]
+            },
+            {
+              "name": "pipe-vert-top-left",
+              "type": "solid",
+              "range": [
+                30,
+                11,
+                31,
+                12
+              ]
+            },
+            {
+              "name": "pipe-vert-top-right",
+              "type": "solid",
+              "range": [
+                31,
+                11,
+                32,
+                12
+              ]
+            },
+            {
+              "name": "pipe-vert-left",
+              "type": "solid",
+              "range": [
+                30,
+                12,
+                31,
+                13
+              ]
+            },
+            {
+              "name": "pipe-vert-right",
+              "type": "solid",
+              "range": [
+                31,
+                12,
+                32,
+                13
+              ]
+            },
+            {
+              "name": "pipe-vert-top-left",
+              "type": "solid",
+              "range": [
+                38,
+                9,
+                39,
+                10
+              ]
+            },
+            {
+              "name": "pipe-vert-top-right",
+              "type": "solid",
+              "range": [
+                39,
+                9,
+                40,
+                10
+              ]
+            },
+            {
+              "name": "pipe-vert-left",
+              "type": "solid",
+              "range": [
+                38,
+                10,
+                39,
+                13
+              ]
+            },
+            {
+              "name": "pipe-vert-right",
+              "type": "solid",
+              "range": [
+                39,
+                10,
+                40,
+                13
+              ]
             }
         ],
         "foreground": {},

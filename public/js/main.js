@@ -84,6 +84,9 @@ class Game {
     }
 
     continueLoop() {
+        // window.setTimeout(() => {
+        //     window.requestAnimationFrame((totalTime) => this.gameLoop(totalTime));
+        // }, 100);
         window.requestAnimationFrame((totalTime) => this.gameLoop(totalTime));
     }
 
@@ -97,7 +100,9 @@ class Game {
         switch(this.state) {
             case this.STATE_RUNNIG:
                 let updateCount = Math.floor(elapsedTime / (1000 / 60));
+                // updateCount = 1;
                 let frameTime = (elapsedTime / updateCount);
+                // frameTime = 1000 / 60;
 
                 for (let i = 0; i < updateCount; i++) {
                     this.level.update(frameTime);

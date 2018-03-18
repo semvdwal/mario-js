@@ -70,4 +70,11 @@ export class Controls {
         }
     }
 
+    isPressed(key) {
+        if (this.keyStates.hasOwnProperty(key)) {
+            return this.keyStates[key];
+        }
+        return false;
+    }
+
 }

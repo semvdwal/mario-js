@@ -4,17 +4,25 @@ import {Collider} from "../layers/Collider.js";
 
 export class Gravity extends Trait {
 
+    static getGravityAmount() {
+        return 9.8;
+    }
+
+    static getTerminalVelocity() {
+        return 280;
+    }
+
     constructor() {
         super("Gravity");
+        this.gravity = Gravity.getGravityAmount();
 
-        this.gravity = 10;
-        this.terminalVelocity = 240;
+        this.terminalVelocity = Gravity.getTerminalVelocity();
         this.isFalling = true;
     }
 
     update(entity, deltaTime) {
 
-        this.isFalling = !Collider.instance().checkObstruction(entity, Sides.BOTTOM);
+        this.isFalling = ! Collider.instance().checkObstruction(entity, Sides.BOTTOM);
 
         if (this.isFalling) {
             entity.velocity.y += this.gravity;
@@ -25,11 +33,10 @@ export class Gravity extends Trait {
     }
 
     obstruct(entity, collider, side) {
-        // if (side === Sides.BOTTOM && entity.velocity.y > 0) {
-        //     entity.velocity.y = 0;
-        //     entity.position.y = collider.position.y - entity.size.y;
-        //     this.isFalling = false;
-        // }
+        if (side === Sides.BOTTOM && entity.velocity.y > 0) {
+            entity.velocity.y = 0;
+            this.isFalling = false;
+        }
     }
 
 }

@@ -13,11 +13,20 @@ export class BoundingBox {
     }
 
     overlapsX(box) {
-        return this.left < box.right && this.right > box.left;
+        return this.left < box.right
+            && this.right > box.left;
     }
 
     overlapsY(box) {
-        return this.bottom > box.top && this.top < this.bottom;
+        return this.bottom > box.top
+            && this.top < box.bottom;
+    }
+
+    touches(box) {
+        return this.bottom >= box.top
+            && this.top <= box.bottom
+            && this.left <= box.right
+            && this.right >= box.left;
     }
 
     get bottom() {

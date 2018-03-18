@@ -13,7 +13,13 @@ export class Collider extends Layer {
             entities: false
         };
 
-        this.drawSpecial = [];
+        this.drawSpecial = {
+            blue: [],
+            red: [],
+            green: [],
+            white: [],
+            black: []
+        };
     }
 
     static instance(reset = false) {
@@ -50,22 +56,18 @@ export class Collider extends Layer {
         let entityColliders = this.colliders
         .filter(collider => {
             if (entity === collider) return false;
-            return entity.bounds.overlaps(collider.bounds);
-        });
-        entityColliders.forEach(collider => {
-            this.drawSpecial.push(collider);
-        });
-        entityColliders = entityColliders
+            return entity.bounds.touches(collider.bounds);
+        })
         .filter(collider => {
             switch (side) {
                 case Sides.TOP:
-                    return entity.bounds.top > collider.bounds.top;
+                    return collider.bounds.overlapsX(entity.bounds) && entity.bounds.top > collider.bounds.top;
                 case Sides.RIGHT:
-                    return entity.bounds.right < collider.bounds.right;
+                    return collider.bounds.overlapsY(entity.bounds) && entity.bounds.right < collider.bounds.right;
                 case Sides.BOTTOM:
-                    return entity.bounds.bottom < collider.bounds.bottom;
+                    return collider.bounds.overlapsX(entity.bounds) && entity.bounds.bottom < collider.bounds.bottom;
                 case Sides.LEFT:
-                    return entity.bounds.left > collider.bounds.left;
+                    return collider.bounds.overlapsY(entity.bounds) && entity.bounds.left > collider.bounds.left;
             }
         });
         entityColliders.forEach(collider => {
@@ -73,6 +75,39 @@ export class Collider extends Layer {
             entity.obstruct(collider, side);
         });
         return entityColliders.length > 0;
+    }
+
+    checkCollisions(entity) {
+        this.colliders.filter(collider => {
+            if (entity === collider) return false;
+            return entity.bounds.overlaps(collider.bounds);
+        }).forEach(collider => {
+
+            if (entity.velocity.x !== 0) {
+                if (entity.bounds.right < collider.bounds.right) {
+                    collider.collidesWith(entity, Sides.LEFT);
+                    entity.collidesWith(collider, Sides.RIGHT);
+                }
+
+                else if (entity.bounds.left > collider.bounds.left) {
+                    collider.collidesWith(entity, Sides.RIGHT);
+                    entity.collidesWith(collider, Sides.LEFT);
+                }
+            }
+
+            if (entity.velocity.y !== 0) {
+                if (entity.bounds.bottom < collider.bounds.bottom) {
+                    collider.collidesWith(entity, Sides.TOP);
+                    entity.collidesWith(collider, Sides.BOTTOM);
+                }
+
+                else if (entity.bounds.top > collider.bounds.top) {
+                    collider.collidesWith(entity, Sides.BOTTOM);
+                    entity.collidesWith(collider, Sides.TOP);
+                }
+            }
+
+        });
     }
 
     check(subject) {
@@ -87,50 +122,44 @@ export class Collider extends Layer {
     }
 
     checkX(entity) {
-        if(entity.velocity.x === 0) return;
-        this.colliders.filter(collider => {
-            if(collider.bounds.bottom < entity.bounds.top + 1 || collider.bounds.top > entity.bounds.bottom - 1) return false;
+        if (entity.velocity.x === 0) return;
+        let side = entity.velocity.x < 0 ? Sides.RIGHT : Sides.LEFT;
+        let otherSide = entity.velocity.x < 0 ? Sides.LEFT : Sides.RIGHT;
 
-            if(entity.velocity.x > 0) {
-                return collider.bounds.right >= entity.bounds.right
-                    && collider.bounds.right <= entity.bounds.right + entity.size.x;
-            } else {
-                return collider.bounds.left <= entity.bounds.left
-                    && collider.bounds.left >= entity.bounds.left - entity.size.x;
-            }
+        this.colliders
+        .filter( collider => {
+            if (entity === collider) return false;
+            return     entity.bounds.bottom > collider.bounds.top
+                    && entity.bounds.top < collider.bounds.bottom;
+        })
+        .filter(collider => {
+            return entity.bounds.overlaps(collider.bounds);
         }).forEach(collider => {
-            this.drawSpecial.push(collider);
-            if (entity.bounds.overlaps(collider.bounds)) {
-                if (entity.velocity.x < 0) {
-                    entity.obstruct(collider, Sides.LEFT);
-                } else {
-                    entity.obstruct(collider, Sides.RIGHT);
-                }
-            }
+
+            collider.collidesWith(entity, side);
+            entity.collidesWith(collider, otherSide);
+
         });
     }
 
     checkY(entity) {
-        if(entity.velocity.y === 0) return;
-        this.colliders.filter(collider => {
-            if(collider.bounds.right < entity.bounds.left + 1 || collider.bounds.left > entity.bounds.right - 1) return false;
+        if (entity.velocity.y === 0) return;
+        let side = entity.velocity.y < 0 ? Sides.BOTTOM : Sides.TOP;
+        let otherSide = entity.velocity.y < 0 ? Sides.TOP : Sides.BOTTOM;
 
-            if(entity.velocity.y > 0) {
-                return collider.bounds.top > entity.bounds.top
-                    && collider.bounds.top < entity.bounds.top + entity.size.y;
-            } else {
-                return collider.bounds.bottom < entity.bounds.bottom
-                    && collider.bounds.bottom > entity.bounds.bottom - entity.size.y;
-            }
-        }).forEach(collider => {
-            // this.drawSpecial.push(collider);
-            if (entity.bounds.overlaps(collider.bounds)) {
-                if (entity.velocity.y < 0) {
-                    entity.obstruct(collider, Sides.TOP);
-                } else {
-                    entity.obstruct(collider, Sides.BOTTOM);
-                }
-            }
+        this.colliders
+            .filter(collider => {
+                if (entity === collider) return false;
+                return entity.bounds.left < collider.bounds.right
+                    && entity.bounds.right > collider.bounds.left;
+            })
+            .filter(collider => {
+                return entity.bounds.overlaps(collider.bounds);
+            }).forEach(collider => {
+
+            collider.collidesWith(entity, side);
+            entity.collidesWith(collider, otherSide);
+
         });
     }
 
@@ -143,8 +172,18 @@ export class Collider extends Layer {
             this.drawAll(canvas, this.entities, "#ff00ff");
         }
 
-        this.drawAll(canvas, this.drawSpecial, "#0000ff");
-        this.drawSpecial = [];
+        this.drawAll(canvas, this.drawSpecial.blue, "#0000ff");
+        this.drawAll(canvas, this.drawSpecial.red, "#ff0000");
+        this.drawAll(canvas, this.drawSpecial.green, "#00ff00");
+        this.drawAll(canvas, this.drawSpecial.white, "#ffffff");
+        this.drawAll(canvas, this.drawSpecial.black, "#000000");
+        this.drawSpecial = {
+            blue: [],
+            red: [],
+            green: [],
+            white: [],
+            black: []
+        };
     }
 
     drawAll(canvas, drawables, color) {

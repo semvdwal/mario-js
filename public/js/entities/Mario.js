@@ -6,6 +6,7 @@ import {Walk} from "../traits/Walk.js";
 import {Jump} from "../traits/Jump.js";
 import {Collider} from "../layers/Collider.js";
 import {Move} from "../traits/Move.js";
+import {Collide} from "../traits/Collide.js";
 
 export class Mario extends Entity {
 
@@ -18,6 +19,7 @@ export class Mario extends Entity {
         this.addTrait(new Walk());
 
         this.addTrait(new Move());
+        // this.addTrait(new Collide());
 
         this.position.x = 10;
         this.position.y = 10;

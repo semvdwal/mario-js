@@ -79,6 +79,50 @@
           "w": 16,
           "h": 16
         }
+      },
+      {
+        "name": "pipe-vert-top-left",
+        "position": {
+          "x": 0,
+          "y": 128
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "pipe-vert-top-right",
+        "position": {
+          "x": 16,
+          "y": 128
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "pipe-vert-left",
+        "position": {
+          "x": 0,
+          "y": 144
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "pipe-vert-right",
+        "position": {
+          "x": 16,
+          "y": 144
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
       }
     ],
     "animations": [
