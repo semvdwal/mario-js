@@ -17,6 +17,9 @@ class Game {
 
         this.actors = [];
         this.entities = [];
+        this.camera = undefined;
+        this.level = undefined;
+        this.player = undefined;
 
         this.updateTime = 0;
         this.fps = 0;
@@ -70,13 +73,13 @@ class Game {
         Mario.load().then(mario => {
             this.entities.push(mario);
 
-            let player = new Player();
-            player.setEntity(mario);
+            this.player = new Player();
+            this.player.setEntity(mario);
 
-            let camera = Camera.instance();
-            camera.setEntity(mario);
+            this.camera = Camera.instance();
+            this.camera.setEntity(mario);
 
-            this.actors.push(player, camera);
+            this.actors.push(this.player, this.camera);
 
             this.state = this.STATE_RUNNIG;
         });
@@ -112,6 +115,18 @@ class Game {
 
                 this.level.draw(this.camera, totalTime);
                 this.entities.forEach(entity => entity.render(this.canvas, totalTime));
+                this.entities.forEach(entity => {
+                    if (!entity.alive) {
+                        this.entities.splice(this.entities.indexOf(entity), 1);
+                    }
+                });
+                if (!this.player.controlledEntity.alive) {
+                    Mario.load().then(mario => {
+                        this.entities.push(mario);
+                        this.player.setEntity(mario);
+                        this.camera.setEntity(mario);
+                    });
+                }
                 break;
             case this.STATE_PAUSED:
                 this.level.draw(this.camera, 0);

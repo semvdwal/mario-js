@@ -1,5 +1,4 @@
 import {Trait} from "./Trait.js";
-import {Controls} from "../helpers/Controls.js";
 import {Sides} from "../entities/Entity.js";
 import {Collider} from "../layers/Collider.js";
 
@@ -40,25 +39,13 @@ export class Walk extends Trait {
                     entity.velocity.x = 0;
                 }
             } else {
-                const decel = Math.min(Math.abs(entity.velocity.x), this.deceleration * deltaTime);
-                entity.velocity.x += entity.velocity.x > 0 ? -decel : decel;
+                if (Collider.instance().checkObstruction(entity, Sides.BOTTOM)) {
+                    const decel = Math.min(Math.abs(entity.velocity.x), this.deceleration * deltaTime);
+                    entity.velocity.x += entity.velocity.x > 0 ? -decel : decel;
+                }
             }
-
-            // Collider.instance().checkX(entity);
 
         }
     }
-
-    // obstruct(entity, collider, side) {
-    //     if (entity.bounds.overlaps(collider.bounds)) {
-    //         if (side === Sides.RIGHT) {
-    //             entity.velocity.x = 0;
-    //             entity.position.x = collider.position.x - entity.size.x;
-    //         } else if (side === Sides.LEFT) {
-    //             entity.velocity.x = 0;
-    //             entity.position.x = collider.position.x + collider.size.x;
-    //         }
-    //     }
-    // }
 
 }

@@ -20,6 +20,8 @@ export class Entity {
         this.velocity = new Vector(0, 0);
 
         this.bounds = new BoundingBox(this.position, this.size, this.offset);
+
+        this.alive = true;
     }
 
     get height() {

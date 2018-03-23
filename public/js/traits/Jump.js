@@ -15,7 +15,7 @@ export class Jump extends Trait {
         this.jumpTime = 0;
         this.maxJumpTime = 200;
 
-        this.gravityFallingFactor = 2.3;
+        this.gravityFallingFactor = 1.8;
         this.gravityDefyingFactor = 1.1;
 
         this.canJump = true;

@@ -28,4 +28,10 @@ export class Player extends Actor {
         this.controlledEntity = entity;
     }
 
+    update(deltaTime) {
+        if (this.controlledEntity.position.y > 20 * 16) {
+            this.controlledEntity.alive = false;
+        }
+    }
+
 }
