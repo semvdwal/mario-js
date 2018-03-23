@@ -21,7 +21,12 @@ export class Entity {
 
         this.bounds = new BoundingBox(this.position, this.size, this.offset);
 
+        this.player = false;
+        this.enemy = false;
+
         this.alive = true;
+        this.defeated = false;
+        this.defeatedTime = 0;
     }
 
     get height() {

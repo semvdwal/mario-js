@@ -16,7 +16,8 @@ export class Level {
         return new Promise(resolve => {
             fetch("../resources/levels/" + name + ".json").then(data => {
                 data.json().then(levelData => {
-                    SpriteSheet.load("tiles").then(sprites => {
+                    SpriteSheet.load("tiles").then(([name, img, tileset]) => {
+                        let sprites = new SpriteSheet(name, img, tileset);
                         sprites.selectTileset(levelData.tileSet);
                         let layers = [];
                         if (levelData.layers.hasOwnProperty("background")) {

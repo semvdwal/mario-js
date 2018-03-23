@@ -33,21 +33,21 @@ export class Collider extends Layer {
 
     addEntity(entity) {
         this.entities.push(entity);
+        this.addCollider(entity);
     }
 
     removeCollider(collider) {
-        this.colliders.slice(this.colliders.indexOf(collider), 1);
+        this.colliders.splice(this.colliders.indexOf(collider), 1);
     }
 
     removeEntity(entity) {
-        this.entities.slice(this.entities.indexOf(collider), 1);
+        this.entities.splice(this.entities.indexOf(entity), 1);
+        this.removeCollider(entity);
     }
 
     update() {
         this.entities.forEach(entity => {
-            // this.checkX(entity);
-            // this.checkY(entity);
-            this.check(entity);
+            this.checkCollisions(entity);
         });
     }
 

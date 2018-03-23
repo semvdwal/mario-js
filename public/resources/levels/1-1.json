@@ -33,6 +33,16 @@
                 ]
             },
             {
+              "name": "bricks-light",
+              "type": "solid",
+              "range": [
+                1,
+                12,
+                2,
+                13
+              ]
+            },
+            {
                 "name": "bricks-light",
                 "type": "solid",
                 "range": [

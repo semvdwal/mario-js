@@ -19,17 +19,19 @@ export class Mario extends Entity {
         this.addTrait(new Walk());
 
         this.addTrait(new Move());
-        // this.addTrait(new Collide());
 
         this.position.x = 10;
         this.position.y = 10;
+
+        this.player = true;
 
         Collider.instance().addEntity(this);
     }
 
     static load() {
         return new Promise(resolve => {
-            SpriteSheet.load("characters").then(sprites => {
+            SpriteSheet.load("characters").then(([name, img, tileset]) => {
+                let sprites = new SpriteSheet(name, img, tileset);
                 sprites.selectTileset("mario");
                 resolve(new Mario(sprites));
             });

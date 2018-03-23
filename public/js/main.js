@@ -2,7 +2,9 @@ import {Canvas} from "./helpers/Canvas.js";
 import {Camera} from "./actors/Camera.js";
 import {Level} from "./helpers/Level.js";
 import {Mario} from "./entities/Mario.js";
+import {Goomba} from "./entities/enemies/Goomba.js";
 import {Player} from "./actors/Player.js";
+import {Collider} from "./layers/Collider.js";
 
 class Game {
 
@@ -84,6 +86,10 @@ class Game {
             this.state = this.STATE_RUNNIG;
         });
 
+        Goomba.load(150, 10, -1).then(goomba => {
+            this.entities.push(goomba);
+        });
+
     }
 
     continueLoop() {
@@ -117,6 +123,7 @@ class Game {
                 this.entities.forEach(entity => entity.render(this.canvas, totalTime));
                 this.entities.forEach(entity => {
                     if (!entity.alive) {
+                        Collider.instance().removeEntity(entity);
                         this.entities.splice(this.entities.indexOf(entity), 1);
                     }
                 });

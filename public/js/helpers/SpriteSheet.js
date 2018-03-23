@@ -8,7 +8,7 @@ export class SpriteSheet {
     }
 
     static load(name) {
-        if (typeof SpriteSheet.spriteSheets == "undefined") SpriteSheet.spriteSheets = {};
+        if (typeof SpriteSheet.spriteSheets === "undefined") SpriteSheet.spriteSheets = {};
         if (!SpriteSheet.spriteSheets.hasOwnProperty(name)) {
             SpriteSheet.spriteSheets[name] = new Promise(resolve => {
                 Promise.all([
@@ -21,7 +21,7 @@ export class SpriteSheet {
                     }),
                     fetch('/resources/spritesheets/' + name + '.json').then(response => response.json())
                 ]).then(([img, tileSetDefinitions]) => {
-                    resolve(new SpriteSheet(name, img, tileSetDefinitions));
+                    resolve([name, img, tileSetDefinitions]);
                 });
             });
         }
@@ -30,21 +30,23 @@ export class SpriteSheet {
 
     selectTileset(name) {
         if (this.tileSets != null) {
+            let found = false;
             this.tileSets.forEach(tileSet => {
-                if (tileSet.name == name) {
+                if (tileSet.name === name) {
                     this.activeTileSet = tileSet;
-                    return;
+                    found = true;
                 }
             });
-            this.activeTileSet = this.tileSets[0];
+            if(!found)
+                this.activeTileSet = this.tileSets[0];
         }
     }
 
     get(name) {
         let tileImg = false;
         this.activeTileSet.tiles.forEach(tile => {
-            if (tile.name == name) {
-                if (tile.canvas == undefined) {
+            if (tile.name === name) {
+                if (tile.canvas === undefined) {
                     let canvas = document.createElement('canvas');
                     canvas.width = tile.size.w;
                     canvas.height = tile.size.h;
@@ -60,7 +62,7 @@ export class SpriteSheet {
     anim(name, deltaTime) {
         let frameName = name;
         this.activeTileSet.animations.forEach(animation => {
-            if (animation.name == name) {
+            if (animation.name === name) {
                 let frameNumber = Math.floor( (deltaTime / animation.speed) % animation.frames.length);
                 frameName = animation.frames[frameNumber];
             }

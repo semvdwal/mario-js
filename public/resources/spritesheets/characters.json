@@ -133,5 +133,55 @@
         ]
       }
     ]
+  },
+  {
+    "name": "goomba",
+    "tileHeight": 16,
+    "tileWidth": 16,
+    "tiles": [
+      {
+        "name": "defeat",
+        "position": {
+          "x": 277,
+          "y": 187
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "walk-1",
+        "position": {
+          "x": 296,
+          "y": 187
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
+        "name": "walk-2",
+        "position": {
+          "x": 315,
+          "y": 187
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      }
+    ],
+    "animations": [
+      {
+        "name": "walk",
+        "speed": 200,
+        "frames": [
+          "walk-1",
+          "walk-2"
+        ]
+      }
+    ]
   }
 ]
