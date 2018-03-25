@@ -1,26 +1,27 @@
-import {Entity} from "../Entity.js";
 import {Gravity} from "../../traits/Gravity.js";
 import {Move} from "../../traits/Move.js";
 import {Collider} from "../../layers/Collider.js";
 import {SpriteSheet} from "../../helpers/SpriteSheet.js";
 import PendulumWalk from "../../traits/ai/PendulumWalk.js";
 import {JumpKillable} from "../../traits/ai/JumpKillable.js";
+import {Enemy} from "../Enemy.js";
+import {Level} from "../../helpers/Level.js";
 
-export class Goomba extends Entity {
+export class Goomba extends Enemy {
 
     constructor(sprites, x, y, direction) {
-        super("Goomba");
+        super("Goomba", x, y, direction);
         this.sprites = sprites;
-        this.position.x = x;
-        this.position.y = y;
 
         this.defeatDelay = 250;
-        this.enemy = true;
+        this.respawns = true;
 
         this.addTrait(new Gravity());
         this.addTrait(new PendulumWalk(direction));
         this.addTrait(new JumpKillable());
         this.addTrait(new Move());
+
+        this.respawnParameters = [x, y, direction];
 
         Collider.instance().addEntity(this);
     }
@@ -51,6 +52,13 @@ export class Goomba extends Entity {
         } else {
             canvas.draw(this.sprites.anim("walk", deltaTime), this.position);
         }
+    }
+
+    respawn() {
+        Goomba.load(...this.respawnParameters).then(goomba => {
+            this.alive = false;
+            Level.instance().addEntity(goomba);
+        });
     }
 
 }

@@ -29,9 +29,6 @@ export class Player extends Actor {
     }
 
     update(deltaTime) {
-        if (this.controlledEntity.position.y > 20 * 16) {
-            this.controlledEntity.alive = false;
-        }
     }
 
 }

@@ -100,7 +100,8 @@
     "animations": [
       {
         "name": "walk",
-        "speed": 150,
+        "speed": 140,
+        "maxSpeed": 105,
         "frames": [
           "walk-1", "walk-2", "walk-3"
         ]
@@ -108,6 +109,7 @@
       {
         "name": "run",
         "speed": 85,
+        "maxSpeed": 50,
         "frames": [
           "walk-1",
           "walk-2",
@@ -116,7 +118,8 @@
       },
       {
         "name": "walk-reverse",
-        "speed": 150,
+        "speed": 140,
+        "maxSpeed": 105,
         "frames": [
           "walk-1-reverse",
           "walk-2-reverse",
@@ -126,6 +129,7 @@
       {
         "name": "run-reverse",
         "speed": 85,
+        "maxSpeed": 50,
         "frames": [
           "walk-1-reverse",
           "walk-2-reverse",

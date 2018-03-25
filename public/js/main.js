@@ -17,8 +17,6 @@ class Game {
         this.STATE_CONTINUE = Symbol('continue');
         this.STATE_ENDED = Symbol('ended');
 
-        this.actors = [];
-        this.entities = [];
         this.camera = undefined;
         this.level = undefined;
         this.player = undefined;
@@ -69,25 +67,28 @@ class Game {
 
         Level.load("1-1", this.canvas).then(level => {
             this.level = level;
+
+            Mario.load().then(mario => {
+                this.level.addEntity(mario);
+
+                this.player = new Player();
+                this.player.setEntity(mario);
+
+                this.camera = Camera.instance();
+                this.camera.setEntity(mario);
+
+                this.state = this.STATE_RUNNIG;
+            });
+
+            Goomba.load(150, 10, -1).then(goomba => {
+                this.level.addEntity(goomba);
+            });
+
+            Goomba.load(400, 10, -1).then(goomba => {
+                this.level.addEntity(goomba);
+            });
+
             this.continueLoop();
-        });
-
-        Mario.load().then(mario => {
-            this.entities.push(mario);
-
-            this.player = new Player();
-            this.player.setEntity(mario);
-
-            this.camera = Camera.instance();
-            this.camera.setEntity(mario);
-
-            this.actors.push(this.player, this.camera);
-
-            this.state = this.STATE_RUNNIG;
-        });
-
-        Goomba.load(150, 10, -1).then(goomba => {
-            this.entities.push(goomba);
         });
 
     }
@@ -115,21 +116,16 @@ class Game {
 
                 for (let i = 0; i < updateCount; i++) {
                     this.level.update(frameTime);
-                    this.actors.forEach(actor => actor.update(frameTime));
-                    this.entities.forEach(entity => entity.update(frameTime));
                 }
 
                 this.level.draw(this.camera, totalTime);
-                this.entities.forEach(entity => entity.render(this.canvas, totalTime));
-                this.entities.forEach(entity => {
-                    if (!entity.alive) {
-                        Collider.instance().removeEntity(entity);
-                        this.entities.splice(this.entities.indexOf(entity), 1);
-                    }
-                });
+
+                // Respawn player
                 if (!this.player.controlledEntity.alive) {
+                    this.level.removeEntity(this.player.controlledEntity);
+
                     Mario.load().then(mario => {
-                        this.entities.push(mario);
+                        this.level.addEntity(mario);
                         this.player.setEntity(mario);
                         this.camera.setEntity(mario);
                     });
@@ -137,7 +133,6 @@ class Game {
                 break;
             case this.STATE_PAUSED:
                 this.level.draw(this.camera, 0);
-                this.entities.forEach(entity => entity.render(this.canvas, 0));
 
                 this.canvas.drawOverlay();
                 this.canvas.drawText(110, 100, "GAME PAUSED");

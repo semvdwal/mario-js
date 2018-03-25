@@ -8,6 +8,8 @@ export class Canvas {
 
         this.width = this.canvas.width;
         this.height = this.canvas.height;
+
+        this.camera.setSize(this.width, this.height);
     }
 
     draw(image, position) {

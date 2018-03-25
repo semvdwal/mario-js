@@ -21,12 +21,7 @@ export class Entity {
 
         this.bounds = new BoundingBox(this.position, this.size, this.offset);
 
-        this.player = false;
-        this.enemy = false;
-
         this.alive = true;
-        this.defeated = false;
-        this.defeatedTime = 0;
     }
 
     get height() {
@@ -57,6 +52,10 @@ export class Entity {
     update(deltaTime) {
         this.traits.forEach(trait => trait.update(this, deltaTime));
         this.traits.forEach(trait => trait.finalize());
+
+        if (this.position.y > 20 * 16) {
+            this.alive = false; // Fell out of world
+        }
     }
 
     collidesWith(collider, side) {

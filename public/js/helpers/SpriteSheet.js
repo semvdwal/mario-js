@@ -1,3 +1,5 @@
+import {Move} from '../traits/Move.js';
+
 export class SpriteSheet {
 
     constructor(name, img, tileSetDefinitions) {
@@ -59,11 +61,28 @@ export class SpriteSheet {
         return tileImg;
     }
 
-    anim(name, deltaTime) {
+    anim(name, deltaTime, entitySpeed, log = false) {
         let frameName = name;
         this.activeTileSet.animations.forEach(animation => {
+
+            // 0-200 - entity
+            // 105-140 - animation
+            //
+            // animation.current = 105 + ((140 - 105) / (200 / entity.current))
+            // entity.current = 9, animation.current = 106
+            //
+            // animation.current = animation.min + ((animation.max - animation.min) / (entity.max / entity.current))
+
+
             if (animation.name === name) {
-                let frameNumber = Math.floor( (deltaTime / animation.speed) % animation.frames.length);
+                // let speed = typeof entitySpeed === 'number' ? animation.speed - (animation.speed / (Move.maxSpeed / Math.abs(entitySpeed))) : animation.speed;
+                let speed = typeof entitySpeed === 'number' ? ((animation.speed) / (Move.maxSpeed / Math.abs(entitySpeed)) ) : animation.speed;
+                if(log) {
+                    console.log(animation.maxSpeed, animation.speed, Move.maxSpeed);
+                    console.log(Math.abs(entitySpeed), speed, deltaTime);
+                    // console.log(entitySpeed, frameTime, deltaTime, (deltaTime / frameTime));
+                }
+                let frameNumber = Math.floor( (deltaTime * speed) % animation.frames.length);
                 frameName = animation.frames[frameNumber];
             }
         });

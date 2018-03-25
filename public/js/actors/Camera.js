@@ -9,6 +9,9 @@ export class Camera extends Actor {
         this.followDistance = 100;
 
         this.followedEntity = null;
+
+        this.width = 0;
+        this.height = 0;
     }
 
     static instance() {
@@ -23,6 +26,8 @@ export class Camera extends Actor {
             } else {
                 this.position.x = 0;
             }
+        } else {
+            console.log("Followed Entity is null");
         }
     }
 
@@ -30,8 +35,19 @@ export class Camera extends Actor {
         this.followedEntity = entity;
     }
 
+    setSize(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+
     translate(x, y) {
         return [x - this.position.x,  y - this.position.y];
+    }
+
+    visible(entity) {
+        let [x, y] = this.translate(entity.position.x, entity.position.y);
+        return x > 0 && x < this.width
+            && y > 0 && y < this.height;
     }
 
 }

@@ -1,14 +1,12 @@
-import {Vector} from "../helpers/Vector.js";
 import {SpriteSheet} from "../helpers/SpriteSheet.js";
-import {Entity} from "./Entity.js";
+import {Player} from "./Player.js";
 import {Gravity} from "../traits/Gravity.js";
 import {Walk} from "../traits/Walk.js";
 import {Jump} from "../traits/Jump.js";
 import {Collider} from "../layers/Collider.js";
 import {Move} from "../traits/Move.js";
-import {Collide} from "../traits/Collide.js";
 
-export class Mario extends Entity {
+export class Mario extends Player {
 
     constructor(sprites) {
         super("Mario");
@@ -48,9 +46,9 @@ export class Mario extends Entity {
             }
         } else if (this.velocity.x !== 0) {
             if(this.walk.heading === -1) {
-                canvas.draw(this.sprites.anim("walk-reverse", deltaTime), this.position);
+                canvas.draw(this.sprites.anim("walk-reverse", deltaTime, Math.abs(this.velocity.x), true), this.position);
             } else {
-                canvas.draw(this.sprites.anim("walk", deltaTime), this.position);
+                canvas.draw(this.sprites.anim("walk", deltaTime, Math.abs(this.velocity.x), true), this.position);
             }
         } else {
             if(this.walk.heading === -1) {

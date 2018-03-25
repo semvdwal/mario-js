@@ -2,8 +2,8 @@ import {Trait} from "./Trait.js";
 import {Controls} from "../helpers/Controls.js";
 import {Sound} from "../helpers/Sound.js";
 import {Sides} from "../entities/Entity.js";
-import {Collider} from "../layers/Collider.js";
 import {Gravity} from "./Gravity.js";
+import {Enemy} from "../entities/Enemy.js";
 
 export class Jump extends Trait {
 
@@ -11,7 +11,7 @@ export class Jump extends Trait {
         super("Jump");
 
         this.isJumping = false;
-        this.jumpSpeed = 260;
+        this.jumpSpeed = 370;
         this.jumpTime = 0;
         this.maxJumpTime = 200;
 
@@ -24,12 +24,9 @@ export class Jump extends Trait {
 
         Controls.instance().listenTo("A", (state) => {
             if (state && this.canJump) {
-                this.isJumping = true;
-                this.canJump = false;
-                this.sound.effect("jump-small");
+                this.startJump();
             } else {
                 this.isJumping = false;
-                this.canJump = false;
             }
         });
     }
@@ -40,8 +37,6 @@ export class Jump extends Trait {
             if (this.jumpTime >= this.maxJumpTime) {
                 this.stopJump();
             }
-
-            // Collider.instance().checkY(entity);
         }
 
         if (deltaTime > 0) {
@@ -52,12 +47,15 @@ export class Jump extends Trait {
             }
         }
 
-        // if (Collider.instance().checkObstruction(entity, Sides.TOP)) this.stopJump();
-        if (Collider.instance().checkObstruction(entity, Sides.BOTTOM)) this.resetJump();
-
         if (deltaTime > 0 && this.isJumping) {
             entity.velocity.y -= (this.jumpSpeed / deltaTime);
         }
+    }
+
+    startJump() {
+        this.isJumping = true;
+        this.canJump = false;
+        this.sound.effect("jump-small");
     }
 
     stopJump() {
@@ -70,12 +68,27 @@ export class Jump extends Trait {
         this.jumpTime = 0;
     }
 
+    enemyJump() {
+        this.resetJump();
+        this.startJump();
+    }
+
+    obstruct(entity, collider, side) {
+        if(side === Sides.BOTTOM && entity.velocity.y > 0) {
+            this.resetJump();
+        }
+    }
+
     collidesWith(entity, collider, side) {
         if (side === Sides.TOP) {
             this.stopJump();
         }
         if (side === Sides.BOTTOM) {
-            this.resetJump();
+            if(collider instanceof Enemy && collider.hasOwnProperty('jumpkillable')) {
+                this.enemyJump();
+            } else {
+                this.resetJump();
+            }
         }
     }
     //
