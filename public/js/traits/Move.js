@@ -13,13 +13,13 @@ export class Move extends Trait {
         this.baseVerticalDragFactor = 1/6000;
 
         this.slowestSpeed = 8;
-        Move.maxSpeed = 200;
+        Move.maxSpeed = 250;
     }
 
     update(entity, deltaTime) {
 
-        if(entity.velocity.x > Move.maxSpeed) entity.velocity.x = Move.maxSpeed;
-        if(entity.velocity.y > Move.maxSpeed) entity.velocity.y = Move.maxSpeed;
+        if(Math.abs(entity.velocity.x) > Move.maxSpeed) entity.velocity.x = Move.maxSpeed * Math.sign(entity.velocity.x);
+        if(Math.abs(entity.velocity.y) > Move.maxSpeed) entity.velocity.y = Move.maxSpeed * Math.sign(entity.velocity.y);
 
         entity.position.x += entity.velocity.x * (deltaTime / 1000);
         Collider.instance().checkX(entity);

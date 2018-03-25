@@ -6,4 +6,8 @@ export class Player extends Entity {
         super(name)
     }
 
+    inMidAir() {
+        return this.jump.isJumping || this.gravity.isFalling;
+    }
+
 }

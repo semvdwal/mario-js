@@ -42,6 +42,17 @@
         }
       },
       {
+        "name": "brake",
+        "position": {
+          "x": 338,
+          "y": 44
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
+      },
+      {
         "name": "stand-reverse",
         "position": {
           "x": 222,
@@ -95,20 +106,31 @@
           "w": 16,
           "h": 16
         }
+      },
+      {
+        "name": "brake-reverse",
+        "position": {
+          "x": 161,
+          "y": 44
+        },
+        "size": {
+          "w": 16,
+          "h": 16
+        }
       }
     ],
     "animations": [
       {
         "name": "walk",
-        "speed": 140,
-        "maxSpeed": 105,
+        "speed": 220,
+        "maxSpeed": 100,
         "frames": [
           "walk-1", "walk-2", "walk-3"
         ]
       },
       {
         "name": "run",
-        "speed": 85,
+        "speed": 120,
         "maxSpeed": 50,
         "frames": [
           "walk-1",
@@ -118,8 +140,8 @@
       },
       {
         "name": "walk-reverse",
-        "speed": 140,
-        "maxSpeed": 105,
+        "speed": 220,
+        "maxSpeed": 100,
         "frames": [
           "walk-1-reverse",
           "walk-2-reverse",
@@ -128,7 +150,7 @@
       },
       {
         "name": "run-reverse",
-        "speed": 85,
+        "speed": 120,
         "maxSpeed": 50,
         "frames": [
           "walk-1-reverse",

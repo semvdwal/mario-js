@@ -23,13 +23,15 @@ export class Walk extends Trait {
             if (this.direction !== 0) {
 
                 if(this.direction != this.heading) {
-                    this.heading = entity.jump.isJumping ? this.heading : this.direction;
+                    this.heading = entity.inMidAir() ? this.heading : this.direction;
                 }
 
-                if (! Collider.instance().checkObstruction(entity, this.direction === 1 ? Sides.RIGHT : Sides.LEFT)) {
-                    entity.velocity.x += acceleration * this.direction;
-                } else {
-                    entity.velocity.x = 0;
+                if (!entity.inMidAir() || entity.velocity.x === 0 || Math.sign(entity.velocity.x) === this.direction ) {
+                    if (!Collider.instance().checkObstruction(entity, this.direction === 1 ? Sides.RIGHT : Sides.LEFT)) {
+                        entity.velocity.x += acceleration * this.direction;
+                    } else {
+                        entity.velocity.x = 0;
+                    }
                 }
             }
 

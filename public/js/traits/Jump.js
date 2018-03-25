@@ -11,7 +11,7 @@ export class Jump extends Trait {
         super("Jump");
 
         this.isJumping = false;
-        this.jumpSpeed = 370;
+        this.jumpSpeed = 480;
         this.jumpTime = 0;
         this.maxJumpTime = 200;
 

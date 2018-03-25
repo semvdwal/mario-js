@@ -1,4 +1,5 @@
 import {Move} from '../traits/Move.js';
+import {Canvas} from "./Canvas.js";
 
 export class SpriteSheet {
 
@@ -64,25 +65,16 @@ export class SpriteSheet {
     anim(name, deltaTime, entitySpeed, log = false) {
         let frameName = name;
         this.activeTileSet.animations.forEach(animation => {
-
-            // 0-200 - entity
-            // 105-140 - animation
-            //
-            // animation.current = 105 + ((140 - 105) / (200 / entity.current))
-            // entity.current = 9, animation.current = 106
-            //
-            // animation.current = animation.min + ((animation.max - animation.min) / (entity.max / entity.current))
-
-
             if (animation.name === name) {
-                // let speed = typeof entitySpeed === 'number' ? animation.speed - (animation.speed / (Move.maxSpeed / Math.abs(entitySpeed))) : animation.speed;
-                let speed = typeof entitySpeed === 'number' ? ((animation.speed) / (Move.maxSpeed / Math.abs(entitySpeed)) ) : animation.speed;
+                let speed = typeof entitySpeed === 'number' ? Math.floor((animation.speed - ((animation.speed - animation.maxSpeed) / (Move.maxSpeed / Math.abs(entitySpeed)) )) / 10) * 10 : animation.speed;
                 if(log) {
-                    console.log(animation.maxSpeed, animation.speed, Move.maxSpeed);
-                    console.log(Math.abs(entitySpeed), speed, deltaTime);
-                    // console.log(entitySpeed, frameTime, deltaTime, (deltaTime / frameTime));
+                    console.log(speed);
+
+                    Canvas.instance().context.fillStyle = "#000";
+                    Canvas.instance().context.font = "14px Helvetica";
+                    Canvas.instance().context.fillText(speed, 15, 200);
                 }
-                let frameNumber = Math.floor( (deltaTime * speed) % animation.frames.length);
+                let frameNumber = Math.floor( (deltaTime / speed) % animation.frames.length);
                 frameName = animation.frames[frameNumber];
             }
         });

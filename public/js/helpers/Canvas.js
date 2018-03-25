@@ -10,6 +10,12 @@ export class Canvas {
         this.height = this.canvas.height;
 
         this.camera.setSize(this.width, this.height);
+
+        Canvas._instance = this;
+    }
+
+    static instance() {
+        return Canvas._instance;
     }
 
     draw(image, position) {

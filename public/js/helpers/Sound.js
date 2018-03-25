@@ -2,7 +2,7 @@ export class Sound {
 
     constructor() {
         this.sounds = {};
-        this.enabled = true;
+        this.enabled = false;
     }
 
     static instance() {

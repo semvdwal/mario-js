@@ -45,10 +45,18 @@ export class Mario extends Player {
                 canvas.draw(this.sprites.get("jump"), this.position);
             }
         } else if (this.velocity.x !== 0) {
-            if(this.walk.heading === -1) {
-                canvas.draw(this.sprites.anim("walk-reverse", deltaTime, Math.abs(this.velocity.x), true), this.position);
+            if (this.walk.direction !== 0 && Math.sign(this.velocity.x) !== this.walk.direction) {
+                if (this.walk.heading === -1) {
+                    canvas.draw(this.sprites.get("brake-reverse"), this.position);
+                } else {
+                    canvas.draw(this.sprites.get("brake"), this.position);
+                }
             } else {
-                canvas.draw(this.sprites.anim("walk", deltaTime, Math.abs(this.velocity.x), true), this.position);
+                if (this.walk.heading === -1) {
+                    canvas.draw(this.sprites.anim("walk-reverse", deltaTime, Math.abs(this.velocity.x)), this.position);
+                } else {
+                    canvas.draw(this.sprites.anim("walk", deltaTime, Math.abs(this.velocity.x)), this.position);
+                }
             }
         } else {
             if(this.walk.heading === -1) {
